@@ -1,6 +1,8 @@
+"use client";
 import Hero from "@/components/hero";
 import NavBar from "@/components/navBar";
 import ProductViewer from "@/components/productViewer";
+import Showcase from "@/components/showcase";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
@@ -12,6 +14,7 @@ export default function Home() {
       <NavBar />
       <Hero />
       <ProductViewer />
+      <Showcase />
     </main>
   );
 }
