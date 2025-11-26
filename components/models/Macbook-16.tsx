@@ -67,7 +67,10 @@ export default function MacbookModel16(props: JSX.IntrinsicElements["group"]) {
     "/models/macbook-16-transformed.glb"
   ) as unknown as GLTFResult;
 
-  const texture = useTexture("/screen.png");
+  const texture = useTexture("/screen.png", (loadedTexture) => {
+    loadedTexture.colorSpace = THREE.SRGBColorSpace;
+    loadedTexture.needsUpdate = true;
+  });
 
   useEffect(() => {
     scene.traverse((child) => {
@@ -176,7 +179,6 @@ export default function MacbookModel16(props: JSX.IntrinsicElements["group"]) {
       />
       <mesh
         geometry={nodes.Object_123.geometry}
-        material={materials.sfCQkHOWyrsLmor}
         rotation={[Math.PI / 2, 0, 0]}
       >
         <meshBasicMaterial map={texture} />
