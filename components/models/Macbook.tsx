@@ -9,9 +9,11 @@ Title: macbook pro M3 16 inch 2024
 */
 
 import * as THREE from "three";
-import { useGLTF, useTexture } from "@react-three/drei";
+import { useGLTF, useVideoTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import { JSX } from "react";
+import { JSX, useEffect } from "react";
+import useMacbookStore from "@/store";
+import { noChangeParts } from "@/constants";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -60,11 +62,30 @@ type GLTFResult = GLTF & {
 };
 
 export default function MacbookModel(props: JSX.IntrinsicElements["group"]) {
-  const { nodes, materials } = useGLTF(
+  const { color, texture } = useMacbookStore();
+  const { nodes, materials, scene } = useGLTF(
     "/models/macbook-transformed.glb"
   ) as unknown as GLTFResult;
 
-  const texture = useTexture("/screen.png");
+  const screen = useVideoTexture(texture);
+
+  useEffect(() => {
+    scene.traverse((child) => {
+      const mesh = child as THREE.Mesh;
+
+      if (mesh.isMesh && !noChangeParts.includes(child.name)) {
+        const materials = Array.isArray(mesh.material)
+          ? mesh.material
+          : [mesh.material];
+
+        materials.forEach((material) => {
+          if ("color" in material && material.color instanceof THREE.Color) {
+            material.color = new THREE.Color(color);
+          }
+        });
+      }
+    });
+  }, [color, scene]);
 
   return (
     <group {...props} dispose={null}>
@@ -158,7 +179,7 @@ export default function MacbookModel(props: JSX.IntrinsicElements["group"]) {
         material={materials.sfCQkHOWyrsLmor}
         rotation={[Math.PI / 2, 0, 0]}
       >
-        <meshBasicMaterial map={texture} />
+        <meshBasicMaterial map={screen} />
       </mesh>
       <mesh
         geometry={nodes.Object_127.geometry}

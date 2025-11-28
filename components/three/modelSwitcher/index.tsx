@@ -86,7 +86,7 @@ const ModelSwitcher = ({
 
       <PresentationControls {...controlsConfig}>
         <group ref={smallMacbookRef}>
-          <MacbookModel14 scale={isMobile ? 0.03 : 0.06} />
+          <MacbookModel14 scale={isMobile ? 0.04 : 0.07} />
         </group>
       </PresentationControls>
     </>

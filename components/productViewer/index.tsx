@@ -36,9 +36,9 @@ const ProductViewer = () => {
 
           <div className="size-control">
             <div
-              onClick={() => setScale(0.06)}
+              onClick={() => setScale(0.07)}
               className={clsx(
-                scale === 0.06
+                scale === 0.07
                   ? "bg-white text-black"
                   : "bg-transparent text-white"
               )}
@@ -66,7 +66,7 @@ const ProductViewer = () => {
         <StudioLights />
 
         <ModelSwitcher
-          scale={isMobile ? scale - 0.03 : scale}
+          scale={isMobile ? scale - 0.04 : scale}
           isMobile={isMobile}
         />
       </Canvas>
